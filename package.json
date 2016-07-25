@@ -1,0 +1,19 @@
+{
+  "name": "react-wp-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takahiro-saeki/react-wp-rest-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/takahiro-saeki/react-wp-rest-api/issues"
+  },
+  "homepage": "https://github.com/takahiro-saeki/react-wp-rest-api#readme"
+}
