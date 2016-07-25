@@ -8,6 +8,15 @@ import request from 'superagent';
 export default class Main extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      body: ''
+    }
+    this.receive = this.receive.bind(this);
+    this.check = this.check.bind(this);
+  }
+
+  check() {
+    console.log(this.state.body)
   }
 
   receive() {
@@ -18,9 +27,11 @@ export default class Main extends Component {
         console.log(err)
       } else {
         console.log(res)
+        this.setState({
+          body: res.body
+        })
       }
     });
-
   }
 
   render() {
@@ -30,12 +41,17 @@ export default class Main extends Component {
           <AppBar
             title="Title"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
-          />
-        <p style={{
-            background: '#CCC',
-            padding: '1rem'
-          }}
-          onClick={this.receive}>サンプル</p>
+            />
+          <p style={{
+              background: '#CCC',
+              padding: '1rem'
+            }}
+            onClick={this.receive}>サンプル</p>
+          <p style={{
+              background: '#f7f7f7',
+              padding: '1rem'
+            }}
+            onClick={this.check}>state check</p>
         </main>
       </MuiThemeProvider>
     )
