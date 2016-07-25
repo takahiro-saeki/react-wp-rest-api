@@ -1,15 +1,8 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-
-class Test extends Component {
-  render() {
-    return (
-      <main>テスト</main>
-    )
-  }
-}
-
+import Main from './container/Main';
+import STYLE from '../css/style.css';
 render(
-  <Test />,
+  <Main />,
   document.getElementById('app')
 )
