@@ -9,7 +9,23 @@ export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      body: ''
+      body: [
+        {
+          title: {
+            rendered: 'テスト1'
+          }
+        },
+        {
+          title: {
+            rendered: 'テスト1'
+          }
+        },
+        {
+          title: {
+            rendered: 'テスト1'
+          }
+        }
+      ]
     }
     this.receive = this.receive.bind(this);
     this.check = this.check.bind(this);
@@ -35,6 +51,12 @@ export default class Main extends Component {
   }
 
   render() {
+    const title = this.state.body.map((body) => {
+      return (
+        <p>{body.title.rendered}</p>
+      )
+    })
+
     return (
       <MuiThemeProvider muiTheme={Mui}>
         <main>
@@ -52,6 +74,7 @@ export default class Main extends Component {
               padding: '1rem'
             }}
             onClick={this.check}>state check</p>
+          <div>{this.state.body ? title : ''}</div>
         </main>
       </MuiThemeProvider>
     )
