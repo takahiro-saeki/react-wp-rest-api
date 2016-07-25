@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --hot --inline --history-api-fallback",
+    "tree": "tree -I node_modules"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,25 @@
   "bugs": {
     "url": "https://github.com/takahiro-saeki/react-wp-rest-api/issues"
   },
-  "homepage": "https://github.com/takahiro-saeki/react-wp-rest-api#readme"
+  "homepage": "https://github.com/takahiro-saeki/react-wp-rest-api#readme",
+  "devDependencies": {
+    "autoprefixer": "^6.3.7",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "classnames": "^2.2.5",
+    "css-loader": "^0.23.1",
+    "material-ui": "^0.15.2",
+    "postcss-loader": "^0.9.1",
+    "precss": "^1.4.0",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "react-loader": "^2.4.0",
+    "react-router": "^2.6.0",
+    "react-tap-event-plugin": "^1.0.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
 }
