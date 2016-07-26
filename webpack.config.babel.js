@@ -1,19 +1,23 @@
-var webpack = require('webpack');
-var precss = require('precss');
-var autoprefixer = require('autoprefixer');
-var env = process.env.NODE_ENV;
-var OUTPUT_PATH = './template/js/main.js';
-var INPUT_PATH = './assets/js/common.js';
-var path = require('path')
+import webpack from 'webpack';
+import precss from 'precss';
+import autoprefixer from 'autoprefixer';
+import path from 'path';
 
-module.exports = {
-  entry: INPUT_PATH,
+const env = process.env.NODE_ENV;
+const PATH = {
+  INPUT: './assets/js/common.js',
+  OUTPUT:'./template/js/main.js'
+}
+
+
+export default {
+  entry: PATH.INPUT,
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx', '.css']
   },
   output: {
     path: __dirname,
-    filename: OUTPUT_PATH
+    filename: PATH.OUTPUT
   },
   module: {
     loaders: [
@@ -45,7 +49,7 @@ module.exports = {
     }),
     new webpack.optimize.OccurrenceOrderPlugin()
   ],
-  postcss: function () {
+  postcss: () => {
     return {
       defaults: [precss, autoprefixer],
       cleaner:  [autoprefixer({ browsers: [] })]
