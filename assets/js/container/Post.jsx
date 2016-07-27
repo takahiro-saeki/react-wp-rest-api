@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import styles from '../../css/style.css';
 import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
+import Header from '../component/Header';
 
 export default class Post extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class Post extends Component {
     return (
       <MuiThemeProvider muiTheme={Mui}>
         <main>
-          
+          <Header page="ブログ記事" leftIcon={false} />
         </main>
       </MuiThemeProvider>
     )
