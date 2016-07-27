@@ -9,11 +9,10 @@ const PATH = {
   OUTPUT:'./template/js/main.js'
 }
 
-
 export default {
   entry: PATH.INPUT,
   resolve: {
-    extensions: ['', '.js', '.jsx', '.css']
+    extensions: ['', '.js', '.jsx']
   },
   output: {
     path: __dirname,
@@ -32,13 +31,7 @@ export default {
       },
       {
         test: /\.css$/,
-        loaders: ['style', 'css', 'postcss']
-      },
-      {
-        test: /(\.jpg|\.png)$/, loader: "url-loader?limit=1"
-      },
-      {
-        test: /(\.jpg|\.png)$/, loader: "file?name=template/img/[name].[ext]"
+        loaders: ['style', 'css?modules', 'postcss']
       }
     ]
   },
