@@ -5,7 +5,9 @@ import {Mui} from '../data/mui';
 import request from 'superagent';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import style from '../../css/style.css';
+import styles from '../../css/style.css';
+import moment from 'moment';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const url = {
   req: 'http://mohu-para.com/wp-json/wp/v2/posts',
@@ -16,25 +18,22 @@ export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loader: false,
       body: [
         {
           title: {
             rendered: ''
           },
-          _links: {
-            wp: {
-              featuredmedia: [
-                {
-                  href: ''
-                }
-              ]
-            }
+          date: '',
+          excerpt: {
+            rendered: ''
           }
         }
       ]
     }
     this.receive = this.receive.bind(this);
     this.check = this.check.bind(this);
+    this.loader = this.loader.bind(this);
   }
 
   check() {
@@ -49,6 +48,18 @@ export default class Main extends Component {
     });
   }
 
+  componentDidMount() {
+    document.body.classList.add(styles.loaderBg);
+    this.state.loader ? '' : this.loader();
+    this.receive();
+  }
+
+  loader() {
+    this.setState({
+      loader: true
+    })
+  }
+
   receive() {
     request
     .get(url.req)
@@ -58,7 +69,8 @@ export default class Main extends Component {
       } else {
         console.log(res)
         this.setState({
-          body: res.body
+          body: res.body,
+          loader: false
         })
       }
     });
@@ -67,27 +79,16 @@ export default class Main extends Component {
   render() {
     const title = this.state.body.map((body, i) => {
       return (
-        <Card>
-          <CardHeader
-            title="URL Avatar"
-            subtitle="Subtitle"
-            avatar={body._links.wp.featuredmedia[i].href}
-            />
-          <CardMedia
-            overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-            >
-            <img src="http://lorempixel.com/600/337/nature/" />
-          </CardMedia>
-          <CardTitle title={body.title.rendered} subtitle="Card subtitle" />
-          <CardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-          </CardText>
+        <Card style={{width: '90%', margin: '1rem auto'}}>
+          <CardTitle
+            title={body.title.rendered}
+            titleStyle={{fontSize: '1.2rem', lineHeight: 'auto'}}
+            subtitle={moment(body.date).format('YYYY/MM/DD')} />
+          <CardText
+            dangerouslySetInnerHTML={{__html: body.excerpt.rendered.replace('[&hellip;]', '…')}}
+            style={{padding: '0 1rem'}} />
           <CardActions>
-            <FlatButton label="Action1" />
-            <FlatButton label="Action2" />
+            <FlatButton label="続きを見る" />
           </CardActions>
         </Card>
       )
@@ -100,11 +101,8 @@ export default class Main extends Component {
             title="Title"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             />
-          <p className={style.test}
-            onClick={this.receive}>サンプル</p>
-          <p className={style.hoge}
-            onClick={this.check}>state check</p>
           <div>{this.state.body ? title : ''}</div>
+          {this.state.loader ? <CircularProgress /> : ''}
         </main>
       </MuiThemeProvider>
     )

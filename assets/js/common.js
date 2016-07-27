@@ -1,5 +1,5 @@
-import 'babel-polyfill';
 import React, {Component} from 'react';
+import { Router, Route, Link, browserHistory } from 'react-router';
 import {render} from 'react-dom';
 import Main from './container/Main';
 import styles from '../css/style.css';
@@ -7,6 +7,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 render(
-  <Main />,
+  <Router history={browserHistory}>
+    <Route path='/' component={Main} />
+  </Router>,
   document.getElementById('app')
 )
