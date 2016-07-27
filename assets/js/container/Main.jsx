@@ -9,11 +9,7 @@ import styles from '../../css/style.css';
 import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
 import Header from '../component/Header';
-
-const url = {
-  req: 'http://mohu-para.com/wp-json/wp/v2/posts',
-  check: 'http://mohu-para.com/wp-json/wp/v2/media'
-}
+import url from '../data/url';
 
 export default class Main extends Component {
   constructor(props) {

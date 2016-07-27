@@ -10,15 +10,34 @@ import styles from '../../css/style.css';
 import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
 import Header from '../component/Header';
+import url from '../data/url';
+const testURL = 'http://mohu-para.com/wp-json/wp/v2/posts/1542';
 
 export default class Post extends Component {
   constructor(props) {
     super(props);
     this.check()
+    this.async = this.async.bind(this);
+    this.async()
   }
 
   check() {
     console.log(this.props.params.postId)
+  }
+
+  async() {
+    request
+    .get(`${url.req}/${this.props.params.postId}`)
+    .end((err, res) => {
+      if(err) {
+        console.log(err)
+      } else {
+        console.log(res)
+        this.setState({
+          body: res.body
+        })
+      }
+    });
   }
 
   render() {
