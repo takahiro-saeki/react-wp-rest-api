@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import BackSpace from 'material-ui/svg-icons/content/backspace';
+import Back from 'material-ui/svg-icons/navigation/arrow-back';
 
 export default class Header extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class Header extends Component {
         titleStyle={{textAlign: "center"}}
         iconClassNameRight="muidocs-icon-navigation-expand-more"
         iconElementLeft={
-          this.props.leftIcon ? <IconButton onClick={this.location}><BackSpace /></IconButton> : <IconButton />
+          this.props.leftIcon ? <IconButton onClick={this.location}><Back /></IconButton> : <IconButton />
         }
       />
     )

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import {Mui} from '../data/mui';
 import request from 'superagent';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -9,8 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import styles from '../../css/style.css';
 import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
-import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Header from '../component/Header';
 
 const url = {
   req: 'http://mohu-para.com/wp-json/wp/v2/posts',
@@ -110,12 +108,7 @@ export default class Main extends Component {
     return (
       <MuiThemeProvider muiTheme={Mui}>
         <main>
-          <AppBar
-            title="もふ☆パラブログ"
-            titleStyle={{textAlign: "center"}}
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-            iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-            />
+          <Header page="もふ☆パラブログ" leftIcon={false} />
           <div>{this.state.body ? title : ''}</div>
           {this.state.loader ? <CircularProgress /> : ''}
         </main>
