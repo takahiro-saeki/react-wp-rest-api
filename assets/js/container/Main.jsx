@@ -5,7 +5,7 @@ import AppBar from 'material-ui/AppBar';
 import {Mui} from '../data/mui';
 import request from 'superagent';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import styles from '../../css/style.css';
 import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -95,7 +95,13 @@ export default class Main extends Component {
             dangerouslySetInnerHTML={{__html: body.excerpt.rendered.replace('[&hellip;]', '…')}}
             style={{padding: '0 1rem'}} />
           <CardActions>
-            <FlatButton label="続きを見る" onClick={() => this.location('/post/' + body.id)}/>
+            <RaisedButton
+              label="続きを見る"
+              secondary={true}
+              fullWidth={true}
+              onClick={() => this.location('/' + body.id)}
+              style={{margin: ".5rem auto"}}
+            />
           </CardActions>
         </Card>
       )

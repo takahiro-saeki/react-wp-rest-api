@@ -25,7 +25,7 @@ export default class Post extends Component {
     return (
       <MuiThemeProvider muiTheme={Mui}>
         <main>
-          <Header page="ブログ記事" leftIcon={false} />
+          <Header page="ブログ記事" leftIcon={true} />
         </main>
       </MuiThemeProvider>
     )
