@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import {Mui} from '../data/mui';
@@ -8,6 +9,8 @@ import FlatButton from 'material-ui/FlatButton';
 import styles from '../../css/style.css';
 import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 const url = {
   req: 'http://mohu-para.com/wp-json/wp/v2/posts',
@@ -34,6 +37,10 @@ export default class Main extends Component {
     this.receive = this.receive.bind(this);
     this.check = this.check.bind(this);
     this.loader = this.loader.bind(this);
+  }
+
+  location(url) {
+    browserHistory.push(url)
   }
 
   check() {
@@ -88,7 +95,7 @@ export default class Main extends Component {
             dangerouslySetInnerHTML={{__html: body.excerpt.rendered.replace('[&hellip;]', '…')}}
             style={{padding: '0 1rem'}} />
           <CardActions>
-            <FlatButton label="続きを見る" />
+            <FlatButton label="続きを見る" onClick={() => this.location('/post/' + body.id)}/>
           </CardActions>
         </Card>
       )
@@ -98,8 +105,10 @@ export default class Main extends Component {
       <MuiThemeProvider muiTheme={Mui}>
         <main>
           <AppBar
-            title="Title"
+            title="もふ☆パラブログ"
+            titleStyle={{textAlign: "center"}}
             iconClassNameRight="muidocs-icon-navigation-expand-more"
+            iconElementLeft={<IconButton><NavigationClose /></IconButton>}
             />
           <div>{this.state.body ? title : ''}</div>
           {this.state.loader ? <CircularProgress /> : ''}
