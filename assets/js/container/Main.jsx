@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Mui} from '../data/mui';
+import uuid from 'node-uuid';
 import request from 'superagent';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import styles from '../../css/style.css';
 import moment from 'moment';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import CircularProgress from 'material-ui/CircularProgress';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Mui} from '../data/mui';
+import styles from '../../css/style.css';
 import Header from '../component/Header';
 import url from '../data/url';
 import inlineStyle from '../data/inlineStyle';
@@ -63,9 +64,7 @@ export default class Main extends Component {
   }
 
   loader() {
-    this.setState({
-      loader: true
-    })
+    this.setState({loader: true})
   }
 
   receive() {
@@ -75,7 +74,6 @@ export default class Main extends Component {
       if(err) {
         console.log(err)
       } else {
-        console.log(res)
         this.setState({
           body: res.body,
           loader: false
@@ -85,30 +83,30 @@ export default class Main extends Component {
   }
 
   render() {
-    const title = this.state.body.map((body, i) => {
+    const title = this.state.body.map((body) => {
       return (
-        <Card style={this.window()}>
+        <Card style={this.window()} key={uuid.v4()}>
           <CardTitle
             title={body.title.rendered}
-            titleStyle={{fontSize: '1.2rem', lineHeight: 'auto'}}
+            titleStyle={styles.listTitle}
             subtitle={moment(body.date).format('YYYY/MM/DD')} />
           <CardText
             dangerouslySetInnerHTML={{__html: body.excerpt.rendered.replace('[&hellip;]', '…')}}
-            style={{padding: '0 1rem'}} />
+            style={styles.listText} />
           <CardActions>
             <RaisedButton
               label="続きを見る"
               secondary={true}
               fullWidth={true}
               onClick={() => this.location('/' + body.id)}
-              style={{margin: ".5rem auto"}}
+              style={styles.raiseBtn}
               />
           </CardActions>
         </Card>
       )
     })
 
-    const testLoader = () => {
+    const Loader = () => {
       if (this.state.loader === true) {
         return <CircularProgress style={inlineStyle.loader}/>
       }
@@ -117,11 +115,11 @@ export default class Main extends Component {
     return (
       <MuiThemeProvider muiTheme={Mui}>
         <div>
-          <div className={this.state.loader? styles.loaderBg: ''}></div>
-          {testLoader()}
+          <div className={this.state.loader ? styles.loaderBg: ''}></div>
+          {Loader()}
           <main>
             <Header page="もふ☆パラブログ" leftIcon={false} />
-            <div style={{display: 'flex', flexWrap: 'wrap'}}>{this.state.body ? title : ''}</div>
+            <div className={styles.contentWrap}>{this.state.body ? title : ''}</div>
           </main>
         </div>
       </MuiThemeProvider>

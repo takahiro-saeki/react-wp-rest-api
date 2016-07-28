@@ -17,3 +17,8 @@
   position: absolute;
   z-index: 10;
 }
+
+.contentWrap {
+  display: flex;
+  flex-wrap: wrap;
+}

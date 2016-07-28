@@ -7,6 +7,20 @@ const inlineStyle = {
     right: 0,
     margin: 'auto',
     zIndex: 100
+  },
+  listTitle: {
+    fontSize: '1.2rem',
+    lineHeight: 'auto'
+  },
+  listText: {
+    padding: '0 1rem',
+    color: "#757575"
+  },
+  raiseBtn: {
+    margin: ".5rem auto"
+  },
+  postText: {
+    color: "#757575"
   }
 }
 
