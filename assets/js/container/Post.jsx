@@ -26,7 +26,8 @@ export default class Post extends Component {
         },
         featured_media: null
       },
-      imgPath: null
+      imgPath: null,
+      loader: false
     }
     this.async = this.async.bind(this);
     this.onFulfilled = this.onFulfilled.bind(this);
@@ -52,6 +53,10 @@ export default class Post extends Component {
     })
   }
 
+  componentWillMount() {
+    this.setState({loader: true})
+  }
+
   imageLoad() {
     request
     .get(`${url.media}/${this.state.body.featured_media}`)
@@ -61,11 +66,13 @@ export default class Post extends Component {
       } else {
         console.log(res)
         this.setState({
-          imgPath: res.body.source_url
+          imgPath: res.body.source_url,
+          loader: false
         })
       }
     })
   }
+
 
   load() {
     this.async().then(this.onFulfilled, this.onRejected).then(() => this.imageLoad())
@@ -83,8 +90,24 @@ export default class Post extends Component {
   }
 
   render() {
+    const testLoader = () => {
+      if (this.state.loader === true) {
+        return <CircularProgress style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            margin: 'auto',
+            zIndex: 100
+          }}/>
+        }
+      }
     return (
       <MuiThemeProvider muiTheme={Mui}>
+        <div>
+          <div className={this.state.loader? styles.loaderBg: ''}></div>
+          {testLoader()}
         <main>
           <Header page="ブログ記事" leftIcon={true} />
           <Card>
@@ -94,11 +117,13 @@ export default class Post extends Component {
             />
           <CardMedia><img src={this.state.imgPath} /></CardMedia>
             <CardText
-              style={{color: "#757575"}} 
+              style={{color: "#757575"}}
               dangerouslySetInnerHTML={{__html: this.state.body.content.rendered}}
             />
           </Card>
+          {this.state.loader ? <section className={styles.loader}><CircularProgress /><div className={styles.loaderWrap}/></section> : ''}
         </main>
+      </div>
       </MuiThemeProvider>
     )
   }
