@@ -1,3 +1,13 @@
 body, html, p {
   margin: 0;
 }
+
+a {
+  color: #E91E63;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

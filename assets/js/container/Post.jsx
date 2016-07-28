@@ -11,15 +11,27 @@ import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
 import Header from '../component/Header';
 import url from '../data/url';
-const testURL = 'http://mohu-para.com/wp-json/wp/v2/posts/1542';
 
 export default class Post extends Component {
   constructor(props) {
     super(props);
-    this.check()
+    this.state = {
+      body: {
+        title: {
+          rendered: null
+        },
+        date: null,
+        content: {
+          rendered: null
+        },
+        featured_media: null
+      },
+      imgPath: null
+    }
     this.async = this.async.bind(this);
     this.onFulfilled = this.onFulfilled.bind(this);
-    this.async()
+    this.imageLoad = this.imageLoad.bind(this);
+    this.load()
   }
 
   check() {
@@ -40,14 +52,29 @@ export default class Post extends Component {
     })
   }
 
-  load() {
-    this.async().then(this.onFulfilled, this.onRejected)
+  imageLoad() {
+    request
+    .get(`${url.media}/${this.state.body.featured_media}`)
+    .end((err, res) => {
+      if(err) {
+        console.log(err)
+      } else {
+        console.log(res)
+        this.setState({
+          imgPath: res.body.source_url
+        })
+      }
+    })
   }
 
-  onFulfilled(data) {
-    console.log(data)
+  load() {
+    this.async().then(this.onFulfilled, this.onRejected).then(() => this.imageLoad())
+  }
+
+  onFulfilled(res) {
+    console.log(res)
     this.setState({
-      body: data.body
+      body: res.body
     })
   }
 
@@ -61,16 +88,15 @@ export default class Post extends Component {
         <main>
           <Header page="ブログ記事" leftIcon={true} />
           <Card>
-            <CardTitle title="Card title" subtitle="Card subtitle" />
-              <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
-                <img src="http://lorempixel.com/600/337/nature/" />
-              </CardMedia>
-            <CardText>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-            </CardText>
+            <CardTitle
+              title={this.state.body.title.rendered}
+              subtitle={moment(this.state.body.date).format('YYYY/MM/DD')}
+            />
+          <CardMedia><img src={this.state.imgPath} /></CardMedia>
+            <CardText
+              style={{color: "#757575"}} 
+              dangerouslySetInnerHTML={{__html: this.state.body.content.rendered}}
+            />
           </Card>
         </main>
       </MuiThemeProvider>

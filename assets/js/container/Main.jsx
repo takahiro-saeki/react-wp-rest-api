@@ -39,7 +39,7 @@ export default class Main extends Component {
 
   check() {
     request
-    .get(url.check)
+    .get(url.media)
     .end((err, res) => {
       if(err) {
         console.log(err)
