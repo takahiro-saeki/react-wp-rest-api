@@ -31,6 +31,7 @@ export default class Main extends Component {
     }
     this.receive = this.receive.bind(this);
     this.loader = this.loader.bind(this);
+    this.windowResize = this.windowResize.bind(this);
   }
 
   location(url) {
@@ -40,6 +41,25 @@ export default class Main extends Component {
   componentDidMount() {
     this.state.loader ? '' : this.loader();
     this.receive();
+  }
+
+  window() {
+    window.addEventListener('resize', this.windowResize);
+    if(window.innerWidth < 768) {
+      return {
+        width: '90%',
+        margin: '1rem auto'
+      }
+    } else {
+      return {
+        width: '21%',
+        margin: '1rem 2%'
+      }
+    }
+  }
+
+  windowResize() {
+    this.setState({window: window.innerWidth});
   }
 
   loader() {
@@ -67,7 +87,7 @@ export default class Main extends Component {
   render() {
     const title = this.state.body.map((body, i) => {
       return (
-        <Card style={{width: '90%', margin: '1rem auto'}}>
+        <Card style={this.window()}>
           <CardTitle
             title={body.title.rendered}
             titleStyle={{fontSize: '1.2rem', lineHeight: 'auto'}}
@@ -101,7 +121,7 @@ export default class Main extends Component {
           {testLoader()}
           <main>
             <Header page="もふ☆パラブログ" leftIcon={false} />
-            <div>{this.state.body ? title : ''}</div>
+            <div style={{display: 'flex', flexWrap: 'wrap'}}>{this.state.body ? title : ''}</div>
           </main>
         </div>
       </MuiThemeProvider>

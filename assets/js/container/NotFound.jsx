@@ -14,6 +14,7 @@ export default class NotFound extends Component {
       <MuiThemeProvider muiTheme={Mui}>
         <main>
           <Header page="Not Found" leftIcon={false} />
+          <div>そのページは存在しません。</div>
         </main>
       </MuiThemeProvider>
     )
