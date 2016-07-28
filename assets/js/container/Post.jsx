@@ -29,11 +29,13 @@ export default class Post extends Component {
         featured_media: null
       },
       imgPath: null,
-      loader: false
+      loader: false,
+      window: null
     }
     this.async = this.async.bind(this);
     this.onFulfilled = this.onFulfilled.bind(this);
     this.imageLoad = this.imageLoad.bind(this);
+    this.windowSize = this.windowSize.bind(this);
     this.load()
   }
 
@@ -78,6 +80,10 @@ export default class Post extends Component {
 
   load() {
     this.async().then(this.onFulfilled, this.onRejected).then(() => this.imageLoad())
+  }
+
+  windowSize() {
+    this.setState({window: window.innerWidth});
   }
 
   onFulfilled(res) {
