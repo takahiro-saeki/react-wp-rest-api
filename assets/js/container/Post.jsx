@@ -11,6 +11,8 @@ import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
 import Header from '../component/Header';
 import url from '../data/url';
+import inlineStyle from '../data/inlineStyle';
+
 
 export default class Post extends Component {
   constructor(props) {
@@ -92,15 +94,7 @@ export default class Post extends Component {
   render() {
     const testLoader = () => {
       if (this.state.loader === true) {
-        return <CircularProgress style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            margin: 'auto',
-            zIndex: 100
-          }}/>
+        return <CircularProgress style={inlineStyle.loader}/>
         }
       }
     return (
@@ -121,7 +115,6 @@ export default class Post extends Component {
               dangerouslySetInnerHTML={{__html: this.state.body.content.rendered}}
             />
           </Card>
-          {this.state.loader ? <section className={styles.loader}><CircularProgress /><div className={styles.loaderWrap}/></section> : ''}
         </main>
       </div>
       </MuiThemeProvider>

@@ -10,6 +10,7 @@ import moment from 'moment';
 import CircularProgress from 'material-ui/CircularProgress';
 import Header from '../component/Header';
 import url from '../data/url';
+import inlineStyle from '../data/inlineStyle';
 
 export default class Main extends Component {
   constructor(props) {
@@ -29,7 +30,6 @@ export default class Main extends Component {
       ]
     }
     this.receive = this.receive.bind(this);
-    this.check = this.check.bind(this);
     this.loader = this.loader.bind(this);
   }
 
@@ -37,20 +37,7 @@ export default class Main extends Component {
     browserHistory.push(url)
   }
 
-  check() {
-    request
-    .get(url.media)
-    .end((err, res) => {
-      if(err) {
-        console.log(err)
-      } else {
-        console.log(res)
-      }
-    });
-  }
-
   componentDidMount() {
-    document.body.classList.add(styles.loaderBg);
     this.state.loader ? '' : this.loader();
     this.receive();
   }
@@ -95,19 +82,28 @@ export default class Main extends Component {
               fullWidth={true}
               onClick={() => this.location('/' + body.id)}
               style={{margin: ".5rem auto"}}
-            />
+              />
           </CardActions>
         </Card>
       )
     })
 
+    const testLoader = () => {
+      if (this.state.loader === true) {
+        return <CircularProgress style={inlineStyle.loader}/>
+      }
+    }
+
     return (
       <MuiThemeProvider muiTheme={Mui}>
-        <main>
-          <Header page="もふ☆パラブログ" leftIcon={false} />
-          <div>{this.state.body ? title : ''}</div>
-          {this.state.loader ? <CircularProgress /> : ''}
-        </main>
+        <div>
+          <div className={this.state.loader? styles.loaderBg: ''}></div>
+          {testLoader()}
+          <main>
+            <Header page="もふ☆パラブログ" leftIcon={false} />
+            <div>{this.state.body ? title : ''}</div>
+          </main>
+        </div>
       </MuiThemeProvider>
     )
   }
