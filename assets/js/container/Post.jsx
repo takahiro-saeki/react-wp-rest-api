@@ -18,6 +18,7 @@ export default class Post extends Component {
     super(props);
     this.check()
     this.async = this.async.bind(this);
+    this.onFulfilled = this.onFulfilled.bind(this);
     this.async()
   }
 
@@ -26,18 +27,32 @@ export default class Post extends Component {
   }
 
   async() {
-    request
-    .get(`${url.req}/${this.props.params.postId}`)
-    .end((err, res) => {
-      if(err) {
-        console.log(err)
-      } else {
-        console.log(res)
-        this.setState({
-          body: res.body
-        })
-      }
-    });
+    return new Promise((resolve, reject) => {
+      request
+      .get(`${url.req}/${this.props.params.postId}`)
+      .end((err, res) => {
+        if(err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  load() {
+    this.async().then(this.onFulfilled, this.onRejected)
+  }
+
+  onFulfilled(data) {
+    console.log(data)
+    this.setState({
+      body: data.body
+    })
+  }
+
+  onRejected(err) {
+    console.log(err)
   }
 
   render() {
@@ -45,6 +60,18 @@ export default class Post extends Component {
       <MuiThemeProvider muiTheme={Mui}>
         <main>
           <Header page="ブログ記事" leftIcon={true} />
+          <Card>
+            <CardTitle title="Card title" subtitle="Card subtitle" />
+              <CardMedia overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
+                <img src="http://lorempixel.com/600/337/nature/" />
+              </CardMedia>
+            <CardText>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+              Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+              Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+            </CardText>
+          </Card>
         </main>
       </MuiThemeProvider>
     )
